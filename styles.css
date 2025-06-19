@@ -1,0 +1,46 @@
+body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 20px; }
+h1, h2 { color: #006699; }
+
+.header-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.header-nav h1 { margin: 0; }
+.vista-botones button { width: auto; }
+
+/* --- NUEVAS REGLAS PARA EL CAMBIO DE VISTA --- */
+/* Por defecto, los elementos de admin están ocultos */
+.admin-only {
+  display: none !important;
+}
+/* Cuando el body tiene la clase 'modo-admin', se muestran los elementos de admin */
+body.modo-admin .admin-only {
+  display: block !important;
+}
+/* Oculta el botón "Ver como admin" cuando ya estamos en modo admin */
+body.modo-admin #btn-vista-admin {
+  display: none !important;
+}
+/* Muestra el botón "Ver como visitante" solo en modo admin */
+body.modo-admin #btn-vista-visitante {
+  display: inline-block !important;
+}
+/* --- FIN DE NUEVAS REGLAS --- */
+
+.seccion { background: white; padding: 20px; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.noticia { cursor: pointer; padding: 10px; border-bottom: 1px solid #ddd; }
+.noticia:hover { background: #eef9ff; }
+.mapa { height: 300px; margin-top: 15px; }
+input, textarea, button, select { width: 100%; box-sizing: border-box; margin-top: 10px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
+button { background: #006699; color: white; border: none; cursor: pointer; }
+button:hover { background: #004d66; }
+.volver { margin-top: 15px; display: inline-block; color: #006699; text-decoration: none; }
+img.preview { max-width: 100%; max-height: 300px; margin-top: 10px; display: block; border-radius: 8px; object-fit: contain; }
+span.tipo { display: inline-block; background: #006699; color: white; padding: 2px 8px; font-size: 0.8em; border-radius: 10px; margin-right: 5px; }
+.filtros { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 20px; align-items: center; }
+.filtros input[type="text"] { flex-grow: 1; min-width: 200px; }
+#filtros-tipo { display: flex; flex-wrap: wrap; align-items: center; gap: 15px; }
+.filtros-tipo-checkbox { display: flex; align-items: center; gap: 5px; }
+.filtros-tipo-checkbox input { width: auto; margin-top: 0; }

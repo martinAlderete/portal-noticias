@@ -1,0 +1,1 @@
+const TEMAS_NOTICIAS = ["Cultura", "Obras", "Salud", "Deporte"];
