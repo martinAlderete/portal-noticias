@@ -8,6 +8,34 @@ class UI {
     this.marker = null;
   }
 
+  
+  // Devuelve una "Promesa" para que app.js pueda esperar la elección del usuario.
+  seleccionarDireccion(opciones) {
+    return new Promise((resolve, reject) => {
+      let mensaje = "Se encontraron varias coincidencias. Elige una opción:\n\n";
+      opciones.forEach((opcion, index) => {
+        mensaje += `${index + 1}: ${opcion.direccion}\n`;
+      });
+      mensaje += "\nIngresa el número de la opción correcta:";
+
+      const eleccion = prompt(mensaje);
+
+      // Si el usuario presiona "Cancelar", el prompt devuelve null.
+      if (eleccion === null) {
+        return reject(new Error('Selección cancelada.'));
+      }
+
+      const indice = parseInt(eleccion) - 1;
+
+      // Validamos la elección y devolvemos las coordenadas o un error.
+      if (indice >= 0 && indice < opciones.length) {
+        resolve(opciones[indice].coordenadas); // Éxito: devolvemos las coordenadas
+      } else {
+        reject(new Error('Selección inválida. Inténtalo de nuevo.')); // Error
+      }
+    });
+  }
+
   mostrarNoticias(noticias, onNoticiaClick) {
     this.noticiasContainer.innerHTML = "";
     noticias.forEach((n, i) => {
@@ -57,12 +85,10 @@ class UI {
     }
   }
 
-  // --- CORRECCIÓN AQUÍ ---
-  // Se ha ajustado esta función para que funcione correctamente con el nuevo sistema de vistas.
+  
   mostrarListado() {
     if (this.listadoSection) this.listadoSection.style.display = "block";
-    // La visibilidad de la sección de crear ahora es manejada 100% por CSS.
-    // Esto evita que al volver atrás se muestre el formulario en la vista de visitante.
+    
     if (document.body.classList.contains('modo-admin')) {
       if (this.crearSection) this.crearSection.style.display = "block";
     }

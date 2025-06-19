@@ -57,12 +57,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   btnNormalizar.addEventListener('click', () => {
     const direccion = document.getElementById('direccion').value;
+    const inputCoordenadas = document.getElementById('coordenadas');
+
     ApiService.normalizarDireccion(direccion)
+      .then(resultados => {
+        // Si la API devuelve un solo resultado, lo resolvemos directamente.
+        if (resultados.length === 1) {
+          return resultados[0].coordenadas;
+        }
+        // Si devuelve varios, le pasamos la responsabilidad a la UI.
+        // El método de la UI devuelve una promesa con las coordenadas elegidas.
+        return ui.seleccionarDireccion(resultados);
+      })
       .then(coords => {
-        document.getElementById('coordenadas').value = `${coords.y},${coords.x}`;
+        // Este .then() recibe las coordenadas, sea del caso único o de la selección.
+        inputCoordenadas.value = `${coords.y},${coords.x}`;
         alert('Dirección normalizada correctamente.');
       })
       .catch(error => {
+        // Atrapa cualquier error del proceso (API, selección inválida, cancelación).
         alert(error.message);
       });
   });
