@@ -8,56 +8,60 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
-  <div class="header-nav">
+
+  <header class="header-nav">
     <h1>Noticias Municipales</h1>
     <div class="vista-botones">
-      <button id="btn-vista-admin">Ver como Administrador</button>
-      <button id="btn-vista-visitante" class="admin-only">Ver como Visitante</button>
+      <button id="boton-vista-admin">Ver como Administrador</button>
+      <button id="boton-vista-visitante" class="admin-only">Ver como Visitante</button>
     </div>
-  </div>
+  </header>
 
-  <div id="seccion-crear" class="seccion admin-only">
-    <h2>Crear Nueva Noticia</h2>
-    <form id="formNoticia">
-      <input type="text" id="titulo" placeholder="Título" required />
-      <textarea id="contenido" placeholder="Contenido" required></textarea>
-      <select id="tipo" required>
-        <option value="" disabled selected>Seleccione un tema</option>
-      </select>
-      <input type="file" id="imagen" accept="image/*" />
-      <img id="preview" class="preview" style="display:none;" />
-      <input type="text" id="direccion" placeholder="Dirección (opcional)" />
-      <input type="text" id="coordenadas" readonly placeholder="Coordenadas normalizadas" />
-      <button type="button" id="btnNormalizar">Normalizar Dirección</button>
-      <button type="submit">Publicar Noticia</button>
-    </form>
-  </div>
+  <main>
+    <section id="seccion-crear-noticia" class="seccion admin-only">
+      <h2>Crear Nueva Noticia</h2>
+      <form id="formulario-noticia">
+        <input type="text" id="campo-titulo" placeholder="Título" required />
+        <textarea id="campo-contenido" placeholder="Contenido" required></textarea>
+        <select id="selector-tipo" required>
+          <option value="" disabled selected>Seleccione un tema</option>
+        </select>
+        <input type="file" id="selector-imagen" accept="image/*" />
+        <img id="vista-previa-imagen" class="preview" style="display:none;" alt="Previsualización de imagen" />
+        <input type="text" id="campo-direccion" placeholder="Dirección (opcional)" />
+        <input type="text" id="campo-coordenadas" readonly placeholder="Coordenadas normalizadas" />
+        <button type="button" id="boton-normalizar-direccion">Normalizar Dirección</button>
+        <button type="submit">Publicar Noticia</button>
+      </form>
+    </section>
 
-  <div id="seccion-listado" class="seccion">
-    <h2>Noticias Publicadas</h2>
-    <div class="filtros">
-      <input type="text" id="busqueda" placeholder="Buscar por título...">
-      <div id="filtros-tipo"></div>
-    </div>
-    <div id="noticias"></div>
-  </div>
+    <section id="seccion-listado-noticias" class="seccion">
+      <h2>Noticias Publicadas</h2>
+      <div class="filtros">
+        <input type="text" id="campo-busqueda" placeholder="Buscar por título...">
+        <div id="filtros-por-tipo"></div>
+      </div>
+      <div id="contenedor-noticias"></div>
+    </section>
 
-  <div id="seccion-detalle" class="seccion" style="display:none;">
-    <h2 id="detTitulo"></h2>
-    <p id="detContenido"></p>
-    <p><strong>Tipo:</strong> <span id="detTipo"></span></p>
-    <p><strong>Dirección:</strong> <span id="detDireccion"></span></p>
-    <img id="detImagen" class="preview" style="display:none;" />
-    <div id="map" class="mapa"></div>
-    <a href="#" class="volver">← Volver al listado</a>
-  </div>
-
+    <section id="seccion-detalle-noticia" class="seccion" style="display:none;">
+      <h2 id="detalle-titulo"></h2>
+      <p id="detalle-contenido"></p>
+      <p><strong>Tema:</strong> <span id="detalle-tipo"></span></p>
+      <p><strong>Dirección:</strong> <span id="detalle-direccion"></span></p>
+      <img id="detalle-imagen" class="preview" style="display:none;" alt="Imagen de la noticia"/>
+      <div id="mapa-detalle" class="mapa"></div>
+      <a href="#" id="enlace-volver-listado">← Volver al listado</a>
+    </section>
+  </main>
+  
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="js/topicos.js"></script>
   <script src="js/noticias-data.js"></script>
   <script src="js/api.js"></script>
-  <script src="js/ui.js"></script>
   <script src="js/noticias.js"></script>
+  <script src="js/ui.js"></script>
   <script src="js/app.js"></script>
+
 </body>
 </html>
