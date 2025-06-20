@@ -47,12 +47,35 @@ function iniciarAplicacion() {
     alert('Noticia publicada con éxito.');
   }
 
+  // --- FUNCIÓN CON LA LÓGICA CORREGIDA ---
   function manejarNormalizacionDeDireccion() {
     const direccion = document.getElementById('campo-direccion').value;
+
     ApiService.normalizarDireccion(direccion)
       .then(resultados => {
-        const coords = resultados[0].coordenadas;
+        if (resultados.length > 1) {
+          return ui.solicitarSeleccionDeDireccion(resultados);
+        }
+
+        if (resultados.length === 1) {
+          const resultadoUnico = resultados[0];
+          
+          // CORRECCIÓN: Aceptamos tanto 'calle_altura' como 'direccion' como tipos válidos.
+          if (resultadoUnico.tipo === 'calle_altura' || resultadoUnico.tipo === 'direccion') {
+            return resultadoUnico;
+          }
+          
+          if (resultadoUnico.tipo === 'calle_y_calle') {
+            throw new Error("Las direcciones de esquina (ej: 'Calle A y Calle B') no son lo suficientemente específicas. Por favor, ingrese una calle y su altura.");
+          }
+        }
+        
+        throw new Error("La dirección no pudo ser normalizada. Verifique que sea una calle con altura válida.");
+      })
+      .then(direccionElegida => {
+        const coords = direccionElegida.coordenadas;
         document.getElementById('campo-coordenadas').value = `${coords.y},${coords.x}`;
+        document.getElementById('campo-direccion').value = direccionElegida.direccion;
         alert('Dirección normalizada correctamente.');
       })
       .catch(error => {

@@ -107,4 +107,32 @@ class UI {
           contenedor.appendChild(etiqueta);
       });
   }
+
+  // --- MÉTODO CORREGIDO/AÑADIDO ---
+  solicitarSeleccionDeDireccion(opciones) {
+    return new Promise((resolve, reject) => {
+      let mensaje = "Se encontraron varias direcciones posibles (esquinas). Por favor, elige una opción:\n\n";
+      
+      opciones.forEach((opcion, indice) => {
+        mensaje += `${indice + 1}: ${opcion.direccion}\n`;
+      });
+
+      mensaje += "\nIngresa el número de la opción correcta:";
+
+      const eleccionUsuario = prompt(mensaje);
+
+      if (eleccionUsuario === null) {
+        return reject(new Error('Selección de dirección cancelada.'));
+      }
+
+      const indiceSeleccionado = parseInt(eleccionUsuario) - 1;
+
+      if (indiceSeleccionado >= 0 && indiceSeleccionado < opciones.length) {
+        // Resolvemos con el objeto completo de la dirección elegida
+        resolve(opciones[indiceSeleccionado]);
+      } else {
+        reject(new Error('Opción inválida. Por favor, intenta de nuevo.'));
+      }
+    });
+  }
 }
